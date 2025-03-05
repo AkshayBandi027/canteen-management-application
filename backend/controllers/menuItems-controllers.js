@@ -1,5 +1,5 @@
 import asyncHandler from "express-async-handler"
-import MenuItems from "../models/menuItems-model.js"
+import MenuItems from "../models/item-model.js"
 
 // Todo: use zod for validation of input !!
 const createMenuItem = asyncHandler(async (req, res) => {
@@ -24,7 +24,7 @@ const getAllMenuItems = asyncHandler(async (req, res) => {
   return res.status(200).json(menuItems)
 })
 
-const getAllMenuItemById = asyncHandler(async (req, res) => {
+const getMenuItemById = asyncHandler(async (req, res) => {
   const menuItemId = req.params.id
   if (!menuItemId) {
     return res.status(400).json({
@@ -94,7 +94,7 @@ const deleteMenuItem = asyncHandler(async (req, res) => {
 export {
   createMenuItem,
   getAllMenuItems,
-  getAllMenuItemById,
+  getMenuItemById,
   updateMenuItem,
   deleteMenuItem,
 }   
