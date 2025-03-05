@@ -1,0 +1,36 @@
+# Node.js and npm
+node_modules/
+npm-debug.log
+
+# MongoDB
+data/
+
+# Express
+logs/
+
+# React
+build/
+public/build/
+
+# General
+.DS_Store
+.env
+config.js
+package-lock.json
+coverage/
+
+
+# OS files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# IDE files
+.vscode/
+.idea/
+*.iml
+*.sublime-text*
+
+# Logs
+logs/
+*.log
