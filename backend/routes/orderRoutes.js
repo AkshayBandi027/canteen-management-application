@@ -7,25 +7,20 @@ import {
   updateOrderToDelivered,
   updateOrderToCancelled,
 } from "../controllers/order-controllers.js"
+import { checkAuth } from "../middlewares/checkAuth.js"
 
 const router = express.Router()
 
-router.get("/", (req, res) => {
-  res.send("Hello World!")
-})
+router.post("/", checkAuth, createOrder)
 
-router.post("/", createOrder)
+router.get("/all", checkAuth, getAllOrders)
 
-router.get("/all", getAllOrders)
+router.get("/:id", checkAuth, getOrder)
 
-router.get("/:id", getOrder)
+router.put("/:id", checkAuth, updateOrder)
 
-router.put("/:id", updateOrder)
+router.put("/:id/delivered", checkAuth, updateOrderToDelivered)
 
-router.put("/:id/delivered", updateOrderToDelivered)
-
-router.put("/:id/cancelled", updateOrderToCancelled)
-
-
+router.put("/:id/cancelled", checkAuth, updateOrderToCancelled)
 
 export default router

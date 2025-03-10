@@ -1,5 +1,5 @@
 import express from "express"
-import { checkAuth } from "../controllers/user-controllers"
+import { checkAuth } from "../middlewares/checkAuth.js"
 
 const router = express.Router()
 
@@ -8,3 +8,5 @@ const router = express.Router()
 router.get("/admin", checkAuth, (req, res) => {
   res.send("Admin user")
 })
+
+

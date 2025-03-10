@@ -1,21 +1,26 @@
 import express from "express"
-import { createMenuItem, getAllMenuItems, getMenuItemById, updateMenuItem, deleteMenuItem } from "../controllers/menuItems-controllers.js"
+import {
+  createMenuItem,
+  getAllMenuItems,
+  getMenuItemById,
+  updateMenuItem,
+  deleteMenuItem,
+} from "../controllers/menuItems-controllers.js"
 
 const router = express.Router()
 
-router.get("/", (req, res) => {
-  res.send("Hello World!")
+router.get("/", isAdmin, (req, res) => {
+  res.send("Welcome to Admin route!")
 })
 
 router.get("/all", getAllMenuItems)
 
-router.post("/", createMenuItem)
+router.post("/", isAdmin, createMenuItem)
 
-router.get("/:id", getMenuItemById)
+router.get("/:id", isAdmin, getMenuItemById)
 
-router.put("/:id", updateMenuItem)
+router.put("/:id", isAdmin, updateMenuItem)
 
-router.delete("/:id", deleteMenuItem)   
-
+router.delete("/:id", isAdmin, deleteMenuItem)
 
 export default router
