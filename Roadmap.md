@@ -18,8 +18,3 @@
   - Authentication Pages and then authentication logic.
   - ability to order food and pay online.
   - keeping the tracker of the order status.
-
-  # To do - 
-  - Learn good to use the bolt.new and build the frontend with it.
-  - Build Authentication pages and logic.
-  - ability to order food and pay online.
