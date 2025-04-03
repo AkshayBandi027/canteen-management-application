@@ -6,6 +6,7 @@ import {
   updateMenuItem,
   deleteMenuItem,
 } from "../controllers/menuItems-controllers.js"
+import { isAdmin } from "../middlewares/isAdmin.js"
 
 const router = express.Router()
 

@@ -1,4 +1,3 @@
-
 import asyncHandler from "express-async-handler"
 import jwt from "jsonwebtoken"
 import bcrypt from "bcryptjs"
@@ -22,7 +21,12 @@ const registerUser = asyncHandler(async (req, res) => {
     password: hashedPassword,
     username,
   })
-  res.status(201).json({ message: "User created successfully", user })
+
+  const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+    expiresIn: "7d",
+  })
+
+  res.status(201).json({ message: "User created successfully", token })
 })
 
 const loginUser = asyncHandler(async (req, res) => {
@@ -40,7 +44,7 @@ const loginUser = asyncHandler(async (req, res) => {
   const isPasswordCorrect = await bcrypt.compare(password, user.password)
   if (!isPasswordCorrect) {
     res.status(400).json({ message: "Incorrect password" })
-  } 
+  }
   const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
     expiresIn: "7d",
   })

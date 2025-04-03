@@ -1,6 +1,6 @@
 import expressAsyncHandler from "express-async-handler"
-import Order from "../models/order-model"
-import razorpay from "../config/razorpay"
+import Order from "../models/order-model.js"
+import razorpay from "../config/razorpay.js"
 import crypto from "crypto"
 
 const createPayment = expressAsyncHandler(async (req, res) => {
