@@ -1,45 +1,58 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, Platform } from 'react-native';
-import { Search, Filter, Star } from 'lucide-react-native';
-import { BlurView } from 'expo-blur';
+import { Search, Filter } from 'lucide-react-native';
+import { useCart } from '@/lib/context/cart-context';
 
-const categories = [
-  { id: 1, name: 'All', active: true },
-  { id: 2, name: 'Breakfast', active: false },
-  { id: 3, name: 'Lunch', active: false },
-  { id: 4, name: 'Snacks', active: false },
-  { id: 5, name: 'Beverages', active: false },
-];
 
 const menuItems = [
   {
     id: 1,
     name: 'Masala Dosa',
-    price: '₹60',
-    image: 'https://images.unsplash.com/photo-1630409346824-4f0e7b080087?w=500',
+    price: 20,
+    imageUrl: 'https://images.unsplash.com/photo-1630409346824-4f0e7b080087?w=500',
     category: 'Breakfast',
     available: true,
+    quantity: 0,
   },
   {
     id: 2,
     name: 'Veg Thali',
-    price: '₹120',
-    image: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=500',
+    price: 20,
+    imageUrl: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=500',
     category: 'Lunch',
     available: true,
+    quantity: 0,
   },
   {
     id: 3,
     name: 'Samosa',
-    price: '₹20',
-    image: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?w=500',
+    price: 20,
+    imageUrl: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?w=500',
     category: 'Snacks',
     available: true,
+    quantity: 0,
   },
 ];
 
 export default function MenuScreen() {
-  const [activeCategory, setActiveCategory] = useState('All');
+  // const [menuItems, setMenuItems] = useState<MenuItem[] | null>(null);
+  const {addToCart, removeFromCart,cartItems} = useCart()
+
+  const isAddedToCart = (itemId: number) =>  {
+    return cartItems.find(menuItem => menuItem.id === itemId)
+  }
+  useEffect(() => {
+    const fetchMenuItems = async () => {
+      const response = await fetch(`http://localhost:3000/api/menu/all`)
+      const menuItems = await response.json()
+
+      console.log(menuItems)
+    }
+   // hardcode some data in database for now.
+    // fetchMenuItems()
+  },[])
+
+  console.log(cartItems)
 
   return (
     <View style={styles.container}>
@@ -58,44 +71,21 @@ export default function MenuScreen() {
         </TouchableOpacity>
       </View>
 
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.categoriesContainer}>
-        {categories.map((category) => (
-          <TouchableOpacity
-            key={category.id}
-            style={[
-              styles.categoryButton,
-              activeCategory === category.name && styles.categoryButtonActive,
-            ]}
-            onPress={() => setActiveCategory(category.name)}>
-            <Text
-              style={[
-                styles.categoryText,
-                activeCategory === category.name && styles.categoryTextActive,
-              ]}>
-              {category.name}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
-
       <ScrollView 
         contentContainerStyle={styles.menuContent}
         showsVerticalScrollIndicator={false}>
         {menuItems.map((item) => (
           <TouchableOpacity key={item.id} style={styles.menuItem}>
-            <Image source={{ uri: item.image }} style={styles.menuItemImage} />
+            <Image source={{ uri: item.imageUrl }} style={styles.menuItemImage} />
             <View style={styles.menuItemInfo}>
               <View style={styles.menuItemHeader}>
                 <Text style={styles.menuItemName}>{item.name}</Text>
               </View>
               <Text style={styles.menuItemCategory}>{item.category}</Text>
               <View style={styles.menuItemFooter}>
-                <Text style={styles.menuItemPrice}>{item.price}</Text>
-                <TouchableOpacity style={styles.addButton}>
-                  <Text style={styles.addButtonText}>Add</Text>
+                <Text style={styles.menuItemPrice}>₹{item.price}</Text>
+                <TouchableOpacity style={styles.addButton} onPress={() => isAddedToCart(item.id) ? removeFromCart(item.id) : addToCart(item)}>
+                  <Text style={styles.addButtonText}>{isAddedToCart(item.id) ? 'Remove' : 'Add'}</Text>
                 </TouchableOpacity>
               </View>
             </View>

@@ -18,6 +18,7 @@ import {
   Bell,
   Shield,
 } from "lucide-react-native"
+import { useAuth } from "@/lib/context/auth-context"
 
 const menuItems = [
   {
@@ -53,6 +54,8 @@ const menuItems = [
 ]
 
 export default function ProfileScreen() {
+  
+  const { authState } = useAuth()
   const hanleLogOut = () => {
     // handle logout
   }

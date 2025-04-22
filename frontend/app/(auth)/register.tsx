@@ -10,14 +10,14 @@ import {
 import { router } from "expo-router"
 import { User, Mail, Lock } from "lucide-react-native"
 import { useMutation } from "@tanstack/react-query"
-import { useAuth } from "../(lib)/context/auth-context"
+import { useAuth } from "../../lib/context/auth-context"
 
 export default function RegisterScreen() {
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
-  const { OnRegister } = useAuth()
+  const { onRegister } = useAuth()
   const { isPending, mutateAsync, error } = useMutation({
     mutationFn: ({
       name,
@@ -27,7 +27,7 @@ export default function RegisterScreen() {
       name: string
       email: string
       password: string
-    }) => onResigter(name, email, password),
+    }) => onRegister(name, email, password),
     mutationKey: ["Register"],
   })
 

@@ -10,15 +10,15 @@ import {
 import { router } from "expo-router"
 import { Mail, Lock } from "lucide-react-native"
 import { useMutation } from "@tanstack/react-query"
-import { useAuth } from "../(lib)/context/auth-context"
+import { useAuth } from "../../lib/context/auth-context"
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const { OnLogin } = useAuth()
+  const { onLogin } = useAuth()
   const { isPending, mutateAsync, error, data } = useMutation({
     mutationFn: ({ email, password }: { email: string; password: string }) =>
-      OnLogin(email, password),
+      onLogin(email, password),
     mutationKey: ["Login"],
   })
 
